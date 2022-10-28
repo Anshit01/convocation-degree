@@ -1,0 +1,49 @@
+.navbar-styling{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 13px;
+    margin-top: 1px;
+    padding: 20px;
+    color: white;
+}
+
+.navbar-color{
+    background-color: rgb(84, 21, 21);
+}
+
+.institute-name{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+body{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.button-styling{
+    display: inline-block;
+    float: right;
+    border:1px solid white;
+    border-radius: 4px;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+    margin: 4px 2px;
+    background-color: transparent;
+    color: white;
+}
+
+.institute-name-sub{
+    padding: 2px;
+}
+
+.logo-styling {
+    border-radius: 150px;
+    height: 60px;
+}
+    

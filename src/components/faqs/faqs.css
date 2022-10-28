@@ -1,0 +1,9 @@
+.page-styling{
+    display: flex;
+    flex-direction: row;
+}
+
+.faqs-styling{
+    display: flex;
+        flex-direction: column;
+}
