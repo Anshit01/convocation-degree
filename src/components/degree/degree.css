@@ -1,0 +1,23 @@
+.degree-styling {
+    display: flex;
+    flex-direction: row;
+    height: 80vh;
+    margin: 3%;
+    text-align: center;
+}
+
+.degree-styling > div {
+    margin: 1%;
+}
+
+.degree-body{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    align-items: center;
+}
+
+.degree-body > div > img {
+    margin: 1%;
+}
+
