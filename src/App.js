@@ -10,7 +10,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />}></Route>
           <Route path="/faqs" element={<Faqs />}></Route>
-          <Route path="/getDegree" element={<Degree name = "Induja Kala" rollNo = "195013" />}></Route>
+          <Route path="/degree/:rollno" element={<Degree/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
