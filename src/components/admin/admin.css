@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
+.admin-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    margin: 50px 100px;
+}
+
+.admin-head{
+    color: #747171;
+    font-size: 20px;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 700;
+}
+
+.admin-left{
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-form{
+    display: flex;
+    flex-direction: column;
+}
