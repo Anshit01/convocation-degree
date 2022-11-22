@@ -5,5 +5,78 @@
 
 .faqs-styling{
     display: flex;
-        flex-direction: column;
+    flex-direction: column;
+}
+
+.wrapper {
+    margin-top: 50px;
+    margin-left: 70px;
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    grid-template-rows: repeat(6,1fr);
+    column-gap:30px;
+    row-gap:10px;
+}
+.backButton{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end:2;
+}
+.faqs {
+    grid-column-start: 2;
+    grid-column-end: 12;
+    grid-row-start: 1;
+    grid-row-end: 6;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.q1 {
+    margin-top:40px;
+}
+
+.questionWrapper {
+    background-color: #eee;
+    padding: 15px;
+    border:0.5px solid #ccc;
+    font-size: medium;
+}
+
+.questionWrapper:hover {
+    cursor: pointer;
+}
+
+.question {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.answerWrapper {
+    display: none;
+    padding: 15px;
+}
+
+.questionDropDown {
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    height: 20px;
+    width:20px;
+    background-image: url("../../assets/down-arrow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.show {
+    display: block;
 }
