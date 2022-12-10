@@ -1,19 +1,16 @@
 import React from "react";
 import "./navbar.css";
 import nith_logo from "../../assets/nith_logo.png";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ color }) => {
-  console.log(color);
-  const navigate = useNavigate();
-  const navigatetoFaqs = () =>{
-    navigate('/faqs');
-  };
   return (
     <>
       <nav className={`navbar-styling ${color ? "navbar-color" : ""}`}>
         <div>
-          <img className="logo-styling" src={nith_logo}></img>
+          <Link to="/">
+            <img className="logo-styling" src={nith_logo} alt="nith-logo"></img>
+          </Link>
         </div>
         <div className="institute-name">
           <div className="institute-name-sub">
@@ -29,9 +26,11 @@ const Navbar = ({ color }) => {
           </div>
         </div>
         <div>
-          <button className="button-styling" onClick={navigatetoFaqs}>
-            FAQS
-          </button>
+          <Link to="/faqs">
+            <div className="button-styling">
+              FAQS
+            </div>
+          </Link>
         </div>
       </nav>
     </>
