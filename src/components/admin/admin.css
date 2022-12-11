@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 
+html{
+    background-color: #FCFCFC;
+}
+
 .admin-main{
     display: flex;
     flex-direction: row;
-    justify-content: left;
-    margin: 50px 100px;
+    /* justify-content: left; */
+    margin: 50px;
+    margin-left: 150px;
 }
 
 .admin-head{
@@ -12,6 +17,7 @@
     font-size: 20px;
     font-family: 'Mulish', sans-serif;
     font-weight: 700;
+    margin-bottom: 30px;
 }
 
 .admin-left{
@@ -22,10 +28,19 @@
 .admin-form{
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    box-shadow: 5px 5px 32px 0px rgba(199, 195, 195, 25%);
+    padding: 20px;
 }
 
 .admin-form > * {
     margin: 10px;
+}
+
+.date-picker span{
+    font-family: 'Mulish', sans-serif;
+    color: #474747;
+    font-size: 16px;
 }
 
 .date-picker {
@@ -34,27 +49,81 @@
     justify-content: space-between;
 }
 
+select{
+    /* appearance: none; */
+    border: 1px solid #D3CFCF;
+    padding: 6px;
+    border-radius: 2px;
+    outline: 0;
+    color: #474747;
+    font-family: 'Mulish', sans-serif;
+}
+
+.submit-btn, .mint-button{
+    background-color: #5993fe;
+    color: #fff;
+    font-family: 'Mulish', sans-serif;
+    outline: 0;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    width: 120px;
+    border-radius: 2px;
+}
+
 .file-selector {
     width: 300px;
     height: 100px;
-    background-color: #e2e2e2;
-    border: 1px solid #aaaaaa;
+    background-color: #f4f4f4;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    border: 1px solid #D3CFCF;
+    padding: 6px;
+    border-radius: 2px;
+    outline: 0;
+    color: #474747;
+    font-family: 'Mulish', sans-serif;
+    font-size: 12px;
+    margin-bottom: 20px;
 }
 
 .file-selector input {
     display: none;
-}
-
-.mint-button {
-    padding: 10px;
-    font: 40px;
+    color: #474747;
+    font-family: 'Mulish', sans-serif;
 }
 
 .admin-right {
-    margin-left: 100px;
+    margin-left: 170px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-progress{
+    margin-top: 30px;
+}
+
+.progress-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-text{
+    text-align: center;
+    color: #474747;
+    font-family: 'Mulish', sans-serif;
+    font-size: 14px;
+}
+
+.mint-button{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
 }

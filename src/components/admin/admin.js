@@ -4,6 +4,9 @@ import Navbar from "../navbar/navbar";
 import branches from "../../assets/branches.json";
 import parser from "papaparse";
 import {createCanvas, loadImage} from "canvas";
+import {getActiveAccount, getMinterContract} from "../../utils/tezos"
+import {char2Bytes} from "@taquito/utils"
+import ProgressBar from '@ramonak/react-progress-bar';
 
 const fileTypes = ["CSV"];
 
@@ -13,6 +16,7 @@ const Admin = () => {
   const [count, setCount] = useState(0);
   const [total, setTotal] = useState(0);
   const [hashes, setHashes] = useState({});
+  const [isMinting, setIsMinting] = useState(false);
 
   async function generateDegree({name, fatherName, rollNo, cgpi, branch, date}) {
     const degree = await loadImage("/degree.jpg");
@@ -105,10 +109,8 @@ const Admin = () => {
   }
 
   async function generateDegrees(studentData, date, branch) {
-    setTotal(studentData.length);
-    setCount(0)
-    setImgBuffer(undefined)
-    setHashes([])
+    clearState()
+    setTotal(studentData.length)
     studentData.forEach(async (student) => {
       const base64Image = await generateDegree({...student, date, branch});
       const res = await fetch("https://us-central1-memecast-2913f.cloudfunctions.net/pinToIPFS-default", {
@@ -128,17 +130,44 @@ const Admin = () => {
       })
       setCount((count) => count + 1)
       const data = await res.json()
-      setHashes((hashes) => ({...hashes, metadata: data.result.metadata}))
+      setHashes((hashes) => ({...hashes, [student.rollNo]: data.result.metadata}))
     })
   }
 
   async function mint() {
-    if (Object.keys(hashes).length === 0) {
+    if (Object.keys(hashes).length === 0 && false) {
       alert("Generate degrees first")
       return
     }
-    // TODO: Mint NFTs here using hashes array
+    console.log(hashes)
+    setIsMinting(true)
+    try {
+      const acc = await getActiveAccount(true);
+      const minter = await getMinterContract()
+      const payload = []
+      for (let rollno in hashes) {
+        payload.push({
+          metadata: char2Bytes(hashes[rollno]),
+          rollno: rollno,
+          to_: acc.address
+        })
+      }
+      const op = await minter.methods.mint(payload).send()
+      await op.confirmation(1)
+      alert("Degree(s) created on the blockchain!")
+    } catch (e) {
+      alert("Error ", e)
+      console.log(e)
+    }
+    clearState()
+  }
 
+  function clearState() {
+    setTotal(0);
+    setCount(0)
+    setImgBuffer(undefined)
+    setHashes([])
+    setIsMinting(false)
   }
 
   return (
@@ -152,7 +181,7 @@ const Admin = () => {
               <span>Select date:</span>
               <input type="date" name="date" required/>
             </label>
-            <select name="branch">
+            <select name="branch" className="branch">
               {branches.map((branch) => 
                 <option key={branch} value={branch}>{branch}</option>
               )}
@@ -181,13 +210,15 @@ const Admin = () => {
                 required
               />
             </label>
-            <input type="submit" value="Generate Degrees" />
+            <input type="submit" className="submit-btn" value="Submit" />
           </form>
           <div className="admin-progress">
-            <p>Progress: {count}/{total}</p>
+            <ProgressBar className="progress-bar" completed={(count/total) * 100} isLabelVisible={false} bgColor="#57C43C" height="15px" borderRadius="2px"/>
+            <p className="progress-text">{count} out of {total} degrees generated</p>
           </div>
-          <button className="mint-button" onClick={mint}><b>Create Degrees on the blockchain</b></button>
+          <button className="mint-button" onClick={mint} disabled={isMinting}><b>{isMinting? "Minting.." : "Mint"}</b></button>
         </div>
+        
         <div className="admin-right">
           <img src={imgBuffer? imgBuffer: "/degree.jpg"} height="700px" alt=""/>
         </div>

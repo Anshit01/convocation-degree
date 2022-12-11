@@ -1,5 +1,5 @@
 import Homepage from "./components/homepage/homepage";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Faqs from "./components/faqs/faqs";
 import Degree from "./components/degree/degree";
 import Admin from "./components/admin/admin";
