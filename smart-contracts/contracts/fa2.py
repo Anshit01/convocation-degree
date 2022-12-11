@@ -334,7 +334,8 @@ class Fa2Nft(OffchainViewsNft, Common):
         metadata = sp.set_type_expr(metadata, sp.TBigMap(sp.TString, sp.TBytes))
         ledger, token_metadata = self.initial_mint(token_metadata, ledger)
         self.init(
-            ledger=sp.big_map(ledger, tkey=sp.TNat, tvalue=sp.TAddress),
+            ledger=sp.big_map(ledger, tkey=sp.TNat, tvalue=sp.TAddress),  # token_id: owner
+            token_index=sp.big_map(tkey=sp.TString, tvalue=sp.TNat),  # rollno: token_id
             metadata=metadata,
             last_token_id=sp.nat(len(token_metadata)),
         )
@@ -610,12 +611,19 @@ class MintNft:
     @sp.entry_point
     def mint(self, batch):
         """Admin can mint new or existing tokens."""
-        sp.verify(self.is_administrator(sp.sender), "FA2_NOT_ADMIN")
+        sp.set_type(batch, sp.TList(sp.TRecord(
+            metadata = sp.TMap(sp.TString, sp.TBytes),
+            to_ = sp.TAddress,
+            rollno = sp.TString,
+        )))
+        sp.verify(self.is_minter(sp.sender), "FA2_NOT_ADMIN")
         with sp.for_("action", batch) as action:
+            sp.verify( ~self.data.token_index.contains(action.rollno), "ROLLNO_ALREADY_EXISTS")
             token_id = sp.compute(self.data.last_token_id)
             metadata = sp.record(token_id=token_id, token_info=action.metadata)
             self.data.token_metadata[token_id] = metadata
             self.data.ledger[token_id] = action.to_
+            self.data.token_index[action.rollno] = token_id
             self.data.last_token_id += 1
 
 class MintFungible:
@@ -698,17 +706,10 @@ class BurnNft:
         Burning an nft destroys its metadata.
         """
         sp.verify(self.policy.supports_transfer, "FA2_TX_DENIED")
+        sp.verify(self.is_administrator(sp.sender), "FA2_NOT_ADMIN")
         with sp.for_("action", batch) as action:
             sp.verify(self.is_defined(action.token_id), "FA2_TOKEN_UNDEFINED")
-            self.policy.check_tx_transfer_permissions(
-                self, action.from_, action.from_, action.token_id
-            )
             with sp.if_(action.amount > 0):
-                sp.verify(
-                    (action.amount == sp.nat(1))
-                    & (self.data.ledger[action.token_id] == action.from_),
-                    message="FA2_INSUFFICIENT_BALANCE",
-                )
                 # Burn the token
                 del self.data.ledger[action.token_id]
                 del self.data.token_metadata[action.token_id]
@@ -749,18 +750,18 @@ class Fa2(
     Admin,
     Minter,
     ChangeMetadata,
-    MintFungibleNFT,
-    BurnFungible,
+    MintNft,
+    BurnNft,
     OnchainviewBalanceOf,
     OffchainviewTokenMetadata,
-    Fa2Fungible,
+    Fa2Nft,
 ):
     def __init__(
         self,
         administrator,
         metadata
     ):
-        Fa2Fungible.__init__(self, metadata, policy=PauseTransfer())
+        Fa2Nft.__init__(self, metadata, policy=PauseTransfer())
         Admin.__init__(self, administrator)
         Minter.__init__(self, administrator)
 

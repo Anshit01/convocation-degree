@@ -8,8 +8,8 @@ import smartpy as sp
 
 MintType = sp.TList(sp.TRecord(
     metadata = sp.TMap(sp.TString, sp.TBytes),
+    rollno = sp.TString,
     to_ = sp.TAddress,
-    amount = sp.TNat,
 ))
 
 class Minter(sp.Contract):
@@ -59,6 +59,7 @@ class Minter(sp.Contract):
     def mint(self, params):
         sp.set_type(params, sp.TList(sp.TRecord(
             to_ = sp.TAddress,
+            rollno = sp.TString,
             metadata = sp.TBytes,
         )))
 
@@ -74,7 +75,7 @@ class Minter(sp.Contract):
         with sp.for_("nft", params) as nft:
             payload.value.push(sp.record(
                 metadata = {"": nft.metadata},
+                rollno = nft.rollno,
                 to_ = nft.to_,
-                amount = 1
             ))
         sp.transfer(payload.value, sp.mutez(0), contract)

@@ -6,6 +6,11 @@ from enum import Enum
 import subprocess
 import dotenv
 
+RPC = {
+    "mainnet": "https://mainnet.smartpy.io",
+    "testnet": "https://ghostnet.smartpy.io",
+}
+
 class Commands(str, Enum):
     TEST = "test"
     COMPILE = "compile"
@@ -63,7 +68,7 @@ def test(contracts, options):
     for contract in contracts:
         print(f"🛠️ Testing {contract}...")
         filename = f"tests/{contract}.py"
-        subprocess.Popen(f"~/smartpy-cli/SmartPy.sh test {filename} .test/{contract}/ --html", shell=True).wait(timeout=60)
+        subprocess.Popen(f"~/smartpy-cli/SmartPy.sh test {filename} .test/ --html", shell=True).wait(timeout=60)
     
     print(f"Done👍 Process completed in {round(time.time() - start_time, 5)}s")
 
@@ -82,7 +87,7 @@ def compile(contracts, options):
     for contract in contracts:
         print(f"💡Compiling {contract} for {network}...")
         filename = f"compile/{contract}.py"
-        subprocess.Popen(f"NETWORK={network} ~/smartpy-cli/SmartPy.sh compile {filename} .compile/{contract}/ --html", shell=True).wait(timeout=60)
+        subprocess.Popen(f"NETWORK={network} ~/smartpy-cli/SmartPy.sh compile {filename} .compile/ --html", shell=True).wait(timeout=60)
 
     print(f"Done👍 Process completed in {round(time.time() - start_time, 5)}s")
 
@@ -92,7 +97,7 @@ def originate(params, options):
     network = parse_network_from_options(options)
     is_compile = "--skip-compile" not in options
 
-    rpc = utils.get_rpc(network)
+    rpc = RPC[network]
 
     if is_compile:
         compile([contract], [op for op in options if op.startswith("network")])
@@ -106,7 +111,7 @@ def originate(params, options):
     else:
         print("Using default key")
     
-    compile_path = f"{CONTRACTS_DIR}{contract}/.compile/{contract}"
+    compile_path = f".compile/{contract}"
     process = subprocess.Popen(f"~/smartpy-cli/SmartPy.sh originate-contract --code {compile_path}/*contract.tz --storage {compile_path}/*storage.tz --rpc {rpc} {key}", shell=True)
     process.wait()
     print(f"Deployed {contract} 🎉")

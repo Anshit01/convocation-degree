@@ -21,3 +21,46 @@
     margin: 1%;
 }
 
+.back-btn{
+    font-family: 'Mulish', sans-serif;
+    font-weight: 600;
+    color: #5C5B5B;
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    outline: 0;
+    text-decoration: none;
+}
+
+a:-webkit-any-link{
+    text-decoration: none;
+}
+
+.go-back{
+    display: flex;
+    flex-direction: row;
+    margin-top: 0;
+}
+
+.back-icon{
+    display: flex;
+    flex: row;
+    align-items: left;
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+}
+
+.name, .roll{
+    font-family: 'Mulish', sans-serif;
+    font-weight: 600;
+    font-size: 18px
+}
+
+.name{
+    margin-bottom: 10px;
+}
+
+/* .degree-display{
+    margin-top: 0;
+} */

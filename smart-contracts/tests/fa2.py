@@ -898,7 +898,7 @@ def test_optional_features(nft_contract, fungible_contract):
         sc.h2("Mint entrypoint")
         # Non admin cannot mint a new NFT token.
         sc.h3("NFT mint failure")
-        nft.mint([sp.record(metadata=tok0_md, to_=alice.address)]).run(
+        nft.mint([sp.record(metadata=tok0_md, to_=alice.address, rollno="195029")]).run(
             sender=alice, valid=False, exception="FA2_NOT_ADMIN"
         )
 
@@ -916,9 +916,9 @@ def test_optional_features(nft_contract, fungible_contract):
         # Mint of a new NFT token.
         nft.mint(
             [
-                sp.record(metadata=tok0_md, to_=alice.address),
-                sp.record(metadata=tok1_md, to_=alice.address),
-                sp.record(metadata=tok2_md, to_=bob.address),
+                sp.record(metadata=tok0_md, to_=alice.address, rollno="195029"),
+                sp.record(metadata=tok1_md, to_=alice.address, rollno="195031"),
+                sp.record(metadata=tok2_md, to_=bob.address, rollno="195030"),
             ]
         ).run(sender=admin)
 
@@ -1000,7 +1000,7 @@ def test_optional_features(nft_contract, fungible_contract):
         # Check that non operator cannot burn others tokens.
         sc.h3("Cannot burn others nft tokens")
         nft.burn([sp.record(token_id=0, from_=alice.address, amount=1)]).run(
-            sender=bob, valid=False, exception="FA2_NOT_OPERATOR"
+            sender=bob, valid=False, exception="FA2_NOT_ADMIN"
         )
 
         sc.h3("Cannot burn others fungible tokens")
@@ -1021,10 +1021,10 @@ def test_optional_features(nft_contract, fungible_contract):
         # Check that burning doesn't remove token_metadata.
         sc.verify(fungible.data.token_metadata.contains(0))
 
-        # Owner can burn NFT.
-        sc.h3("Owner burns his nft tokens")
+        # Admin can burn NFT.
+        sc.h3("Admin burns nft tokens")
         nft.burn([sp.record(token_id=1, from_=alice.address, amount=1)]).run(
-            sender=alice
+            sender=admin
         )
 
         # Check that the contract storage is updated.
@@ -1036,7 +1036,7 @@ def test_optional_features(nft_contract, fungible_contract):
         # Check burn of FA2_INSUFFICIENT_BALANCE on nft.
         sc.h3("Burn with insufficent balance")
         nft.burn([sp.record(token_id=0, from_=alice.address, amount=2)]).run(
-            sender=alice, valid=False, exception="FA2_INSUFFICIENT_BALANCE"
+            sender=alice, valid=False, exception="FA2_NOT_ADMIN"
         )
 
         # Check burn of FA2_INSUFFICIENT_BALANCE on fungible.
@@ -1055,7 +1055,7 @@ def test_optional_features(nft_contract, fungible_contract):
         )
 
         # Operator can burn nft on behalf of the owner.
-        nft.burn([sp.record(token_id=0, from_=alice.address, amount=1)]).run(sender=bob)
+        nft.burn([sp.record(token_id=0, from_=alice.address, amount=1)]).run(sender=admin)
 
         # Check that the contract storage is updated.
         sc.verify(~nft.data.ledger.contains(0))
@@ -1301,7 +1301,7 @@ def test_pause(nft_contract, fungible_contract):
         sc += c2
 
         sc.h3("Mint")
-        c1.mint([sp.record(metadata=tok0_md, to_=alice.address)]).run(sender=admin)
+        c1.mint([sp.record(metadata=tok0_md, to_=alice.address, rollno="195050")]).run(sender=admin)
         c2.mint(
             [
                 sp.record(
@@ -1396,6 +1396,7 @@ if "templates" not in __name__:
 
     class NftTest(
         FA2.Admin,
+        FA2.Minter,
         FA2.WithdrawMutez,
         FA2.MintNft,
         FA2.ChangeMetadata,
@@ -1411,9 +1412,11 @@ if "templates" not in __name__:
                 self, sp.utils.metadata_of_url("ipfs://example"), policy=policy
             )
             FA2.Admin.__init__(self, admin.address)
+            FA2.Minter.__init__(self, admin.address)
 
     class FungibleTest(
         FA2.Admin,
+        FA2.Minter,
         FA2.ChangeMetadata,
         FA2.WithdrawMutez,
         FA2.MintFungible,
@@ -1429,6 +1432,7 @@ if "templates" not in __name__:
                 self, sp.utils.metadata_of_url("ipfs://example"), policy=policy
             )
             FA2.Admin.__init__(self, admin.address)
+            FA2.Minter.__init__(self, admin.address)
 
     # Fa2Nft
 

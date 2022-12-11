@@ -15,8 +15,6 @@ def test():
     manager2 = sp.test_account("Manager2")
     user1 = sp.test_account("User1")
     user2 = sp.test_account("User2")
-    user3 = sp.test_account("User3")
-    user4 = sp.test_account("User4")
     
     scenario.h1("FA2 contract")
     fa2 = FA2(
@@ -40,12 +38,14 @@ def test():
     scenario.h3("Not admin or manager")
     minter.mint([sp.record(
         metadata = sp.utils.bytes_of_string("ipfs://Qm-1.."),
+        rollno = "1",
         to_ = user1.address
     )]).run(sender=user1, valid=False, exception="NOT_ADMIN_OR_MANAGER")
 
     scenario.h3("Mint")
     minter.mint([sp.record(
         metadata = sp.utils.bytes_of_string("ipfs://Qm0.."),
+        rollno = "1",
         to_ = user1.address
     )]).run(sender=manager1)
 
@@ -66,10 +66,12 @@ def test():
     minter.mint([
         sp.record(
             metadata = sp.utils.bytes_of_string("ipfs://Qm1.."),
+            rollno = "2",
             to_ = user1.address
         ),
         sp.record(
             metadata = sp.utils.bytes_of_string("ipfs://Qm2.."),
+            rollno = "3",
             to_ = user2.address
         )
     ]).run(sender=manager2)

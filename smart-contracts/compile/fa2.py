@@ -8,12 +8,12 @@ NETWORK = environ['NETWORK']
 metadata = sp.utils.metadata_of_url("ipfs://Qm...")
 
 if NETWORK == "mainnet":
-    admin = sp.address("tz1f85LjxaHfWfPuNtZFg1aVBiaAkVnVnKsH")
+    admin = sp.address("tz1fbKDvLgwjnuXDcVDUW8JdPTAsna5VhvKD")
 else:
-    admin = sp.address("tz1f85LjxaHfWfPuNtZFg1aVBiaAkVnVnKsH")
+    admin = sp.address("tz1fbKDvLgwjnuXDcVDUW8JdPTAsna5VhvKD")
 
 sp.add_compilation_target(
-    "drops",
+    "fa2",
     Fa2(
         administrator = admin,
         metadata = metadata,

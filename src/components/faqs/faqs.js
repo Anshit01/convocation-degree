@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./faqs.css";
 import Navbar from "../navbar/navbar";
+import { Link } from "react-router-dom";
+import BackBtn from "./back.svg"
 
 const Faqs = () => {
   const [toggle, setToggle] = useState({
@@ -15,7 +17,12 @@ const Faqs = () => {
     <>
       <Navbar color={true} />
       <section className="wrapper">
-        <div className="backButton">Go back</div>
+        <Link to="/">
+          <div className="backButton">
+            <img src={BackBtn} className="back-icon" alt="back-icon"/>
+            <span className="back-btn"> Go Back </span>
+          </div>
+        </Link>
         <section className="faqs">
           <div className="title">Frequently asked questions</div>
           <div
