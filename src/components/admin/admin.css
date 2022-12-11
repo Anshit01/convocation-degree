@@ -49,3 +49,12 @@
 .file-selector input {
     display: none;
 }
+
+.mint-button {
+    padding: 10px;
+    font: 40px;
+}
+
+.admin-right {
+    margin-left: 100px;
+}
