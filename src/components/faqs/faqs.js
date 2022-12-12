@@ -44,10 +44,7 @@ const Faqs = () => {
                 toggle.q1 ? "answerWrapper show" : "answerWrapper"
               }`}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-              finibus id leo id viverra. Nullam elementum metus sodales nisi
-              suscipit, non blandit velit mollis. Phasellus auctor metus blandit
-              eros cursus.
+              Blockchain technology can be used to securely store and manage digital documents. Because the records on a blockchain are immutable and transparent, they can be trusted and easily audited
             </div>
           </div>
           <div
@@ -67,10 +64,7 @@ const Faqs = () => {
                 toggle.q2 ? "answerWrapper show" : "answerWrapper"
               }`}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-              finibus id leo id viverra. Nullam elementum metus sodales nisi
-              suscipit, non blandit velit mollis. Phasellus auctor metus blandit
-              eros cursus.
+              Yes, your degrees are secure. The blockchain technology is used to store your degrees. The blockchain is a decentralized, distributed, and public ledger that is used to record transactions across many computers so that any participant can verify and audit transactions. The blockchain is an append-only data structure that is resistant to modification of the data. This means that once a transaction is recorded, it cannot be altered retroactively without the alteration of all subsequent blocks and the collusion of the network.
             </div>
           </div>
 
@@ -93,10 +87,7 @@ const Faqs = () => {
                 toggle.q3 ? "answerWrapper show" : "answerWrapper"
               }`}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-              finibus id leo id viverra. Nullam elementum metus sodales nisi
-              suscipit, non blandit velit mollis. Phasellus auctor metus blandit
-              eros cursus.
+              Only admin needs a wallet to issue the degrees. Students can view their degrees without a wallet.
             </div>
           </div>
 
@@ -119,10 +110,7 @@ const Faqs = () => {
                 toggle.q4 ? "answerWrapper show" : "answerWrapper"
               }`}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-              finibus id leo id viverra. Nullam elementum metus sodales nisi
-              suscipit, non blandit velit mollis. Phasellus auctor metus blandit
-              eros cursus.
+              You can get the wallet from <a href="https://templewallet.com/">here!</a>
             </div>
           </div>
 
@@ -145,10 +133,7 @@ const Faqs = () => {
                 toggle.q5 ? "answerWrapper show" : "answerWrapper"
               }`}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-              finibus id leo id viverra. Nullam elementum metus sodales nisi
-              suscipit, non blandit velit mollis. Phasellus auctor metus blandit
-              eros cursus.
+               Using a blockchain for digital documents allows for secure and transparent record-keeping. The documents are stored in a decentralized network, which means that there is no central authority or intermediary required to oversee or validate the records. This makes the process more secure and efficient. Additionally, because the records on a blockchain are immutable, they cannot be altered or tampered with. This ensures the integrity and authenticity of the documents.
             </div>
           </div>
         </section>
