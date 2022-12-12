@@ -3,7 +3,7 @@ import { BeaconWallet } from '@taquito/beacon-wallet'
 
 const DAPP_NAME = "Digital Degree - NITH"
 const RPC_URL = "https://ghostnet.smartpy.io";
-const NETWORK = "granadanet"
+const NETWORK = "ghostnet"
 const FA2_CONTRACT_ADDRESS = "KT1Aa9amSPeHNN24A83hyuhb49gtTN2JP6vm"
 const MINTER_CONTRACT_ADDRESS = "KT1BKdjGPBg9EX5Ghehx7szmJ6QPkrTpKnUm"
 

@@ -4,7 +4,7 @@ import Navbar from "../navbar/navbar";
 import branches from "../../assets/branches.json";
 import parser from "papaparse";
 import {createCanvas, loadImage} from "canvas";
-import {getActiveAccount, getMinterContract} from "../../utils/tezos"
+import {getActiveAccount, clearActiveAccount, getMinterContract} from "../../utils/tezos"
 import {char2Bytes} from "@taquito/utils"
 import ProgressBar from '@ramonak/react-progress-bar';
 
@@ -160,6 +160,8 @@ const Admin = () => {
       console.log(e)
     }
     clearState()
+    await clearActiveAccount()
+
   }
 
   function clearState() {
@@ -216,7 +218,7 @@ const Admin = () => {
             <ProgressBar className="progress-bar" completed={(count/total) * 100} isLabelVisible={false} bgColor="#57C43C" height="15px" borderRadius="2px"/>
             <p className="progress-text">{count} out of {total} degrees generated</p>
           </div>
-          <button className="mint-button" onClick={mint} disabled={isMinting}><b>{isMinting? "Minting.." : "Mint"}</b></button>
+          <button className="mint-button" onClick={mint} disabled={isMinting}><b>{isMinting? "Minting..." : "Mint"}</b></button>
         </div>
         
         <div className="admin-right">
